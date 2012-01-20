@@ -84,6 +84,9 @@ class Point(ApiModel):
     def __init__(self, latitude, longitude):
         self.latitude = latitude
         self.longitude = longitude
+    
+    def __unicode__(self):
+        return "latitude: %s longitude: %s" % (self.latitude,self.longitude)
 
 class Location(ApiModel):
     name = None
@@ -108,7 +111,7 @@ class Location(ApiModel):
     
     def __unicode__(self):
         
-        return "Location %s with latitude %s and longitude %s" % (self.name,self.latitude,self.longitude)
+        return "Location %s with point %s" % (self.name,self.point)
 
 class User(ApiModel):
 
