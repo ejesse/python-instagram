@@ -45,7 +45,7 @@ class Media(ApiModel):
 
         new_media.created_time = timestamp_to_datetime(entry['created_time'])
 
-        if entry['location']:
+        if entry.has_key('location'):
             new_media.location = Location.object_from_dictionary(entry['location'])
 
         new_media.link = entry['link']
@@ -91,11 +91,11 @@ class Location(ApiModel):
     @classmethod
     def object_from_dictionary(cls, entry):
         point = None
-        if entry['latitude']:
-            point = Point(entry.get('latitude'),
-                          entry.get('longitude'))
+        if entry.has_key('latitude'):
+            point = Point(entry['latitude'],
+                          entry['longitude'])
         location = cls(entry.get('id'),
-                       point,
+                       point=point,
                        name=entry.get('name'))
         return location
 
