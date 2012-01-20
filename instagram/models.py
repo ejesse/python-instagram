@@ -7,6 +7,12 @@ class ApiModel(object):
         # make dict keys all strings
         entry_str_dict = dict([(str(key), value) for key,value in entry.items()])
         return cls(**entry_str_dict)
+    
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+    
+    def __unicode__(self):
+        return self.__repr__()
 
 class Image(ApiModel):
 
@@ -14,7 +20,7 @@ class Image(ApiModel):
         self.url = url
         self.height = height
         self.width = width
-
+        
 class Media(ApiModel):
 
     def __init__(self, id=None, **kwargs):
@@ -59,7 +65,7 @@ class Tag(ApiModel):
         for key,value in kwargs.iteritems():
             setattr(self, key, value)
 
-    def __str__(self):
+    def __unicode__(self):
         return "Tag %s" % self.name
 
 class Comment(ApiModel):
@@ -120,7 +126,7 @@ class User(ApiModel):
         for key,value in kwargs.iteritems():
             setattr(self, key, value)
 
-    def __str__(self):
+    def __unicode__(self):
         return "User %s" % self.username
 
 class Relationship(ApiModel):
