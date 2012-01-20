@@ -79,11 +79,15 @@ class Comment(ApiModel):
         print "%s said \"%s\"" % (self.user.username, self.message)
 
 class Point(ApiModel):
+    latitude = None
+    longitude = None
     def __init__(self, latitude, longitude):
         self.latitude = latitude
         self.longitude = longitude
 
 class Location(ApiModel):
+    name = None
+    point = None
     def __init__(self, id, *args, **kwargs):
         self.id = id
         for key,value in kwargs.iteritems():
@@ -92,6 +96,7 @@ class Location(ApiModel):
     @classmethod
     def object_from_dictionary(cls, entry):
         point = None
+        location=Location(None)
         if entry is not None:
             if entry.has_key('latitude'):
                 point = Point(entry['latitude'],
@@ -100,6 +105,10 @@ class Location(ApiModel):
                            point=point,
                            name=entry.get('name'))
         return location
+    
+    def __unicode__(self):
+        
+        return "Location %s with latitude %s and longitude %s" % (self.name,self.latitude,self.longitude)
 
 class User(ApiModel):
 
