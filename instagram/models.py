@@ -44,6 +44,10 @@ class Media(ApiModel):
             new_media.user_has_liked = entry['user_has_liked']
         new_media.like_count = entry['likes']['count']
 
+        caption = entry.get('caption')
+        if caption is not None:
+            new_media.caption = Comment.object_from_dictionary(caption)
+
         new_media.comment_count = entry['comments']['count']
         new_media.comments = []
         for comment in entry['comments']['data']:
